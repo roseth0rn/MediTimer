@@ -19,15 +19,21 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repo = StatsRepository(app)
 
-    val timerState: StateFlow<TimerState> get() = _timerState
-    val secondsRemaining: StateFlow<Int> get() = _secondsRemaining
-    val selectedMinutes: StateFlow<Int> get() = _selectedMinutes
-    val stats: StateFlow<Pair<StatsResult, List<Boolean>>> get() = _stats
+    val timerState:       StateFlow<TimerState>                    get() = _timerState
+    val secondsRemaining: StateFlow<Int>                           get() = _secondsRemaining
+    val selectedMinutes:  StateFlow<Int>                           get() = _selectedMinutes
+    val stats:            StateFlow<Pair<StatsResult, List<Boolean>>> get() = _stats
+    val weeklyMinutes:    StateFlow<List<Int>>                     get() = _weeklyMinutes
+    val monthSessions:    StateFlow<Int>                           get() = _monthSessions
+    val bestStreak:       StateFlow<Int>                           get() = _bestStreak
 
-    private val _timerState = MutableStateFlow(TimerState.IDLE)
+    private val _timerState       = MutableStateFlow(TimerState.IDLE)
     private val _secondsRemaining = MutableStateFlow(0)
-    private val _selectedMinutes = MutableStateFlow(10)
-    private val _stats = MutableStateFlow(Pair(StatsResult(0, 0), List(7) { false }))
+    private val _selectedMinutes  = MutableStateFlow(10)
+    private val _stats            = MutableStateFlow(Pair(StatsResult(0, 0), List(7) { false }))
+    private val _weeklyMinutes    = MutableStateFlow(List(7) { 0 })
+    private val _monthSessions    = MutableStateFlow(0)
+    private val _bestStreak       = MutableStateFlow(0)
 
     private var timerJob: Job? = null
 
@@ -36,8 +42,8 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
     fun setMinutes(min: Int) { _selectedMinutes.value = min.coerceIn(1, 120) }
 
     fun startTimer() {
-        val totalSeconds = _selectedMinutes.value * 60
-        _secondsRemaining.value = totalSeconds
+        val total = _selectedMinutes.value * 60
+        _secondsRemaining.value = total
         _timerState.value = TimerState.RUNNING
         timerJob = viewModelScope.launch {
             while (_secondsRemaining.value > 0) {
@@ -53,6 +59,8 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
         _timerState.value = TimerState.IDLE
     }
 
+    fun resetToIdle() { _timerState.value = TimerState.IDLE }
+
     private fun onTimerComplete() {
         _timerState.value = TimerState.FINISHED
         playChime()
@@ -63,10 +71,13 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun resetToIdle() { _timerState.value = TimerState.IDLE }
-
     private fun refreshStats() {
-        viewModelScope.launch { _stats.value = repo.getStats() }
+        viewModelScope.launch {
+            _stats.value        = repo.getStats()
+            _weeklyMinutes.value = repo.getWeeklyMinutes()
+            _monthSessions.value = repo.getMonthSessions()
+            _bestStreak.value   = repo.getBestStreak()
+        }
     }
 
     private fun playChime() {
@@ -78,12 +89,8 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun vibrate() {
-        val vibrator = getApplication<Application>()
+        val v = getApplication<Application>()
             .getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(
-            VibrationEffect.createWaveform(
-                longArrayOf(0, 400, 200, 400, 200, 600), -1
-            )
-        )
+        v.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 400, 200, 400, 200, 600), -1))
     }
 }
