@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Dark purple background circle -->
+    <path
+        android:fillColor="#1A0033"
+        android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0" />
+
+    <!-- Glow bloom behind figure -->
+    <path
+        android:fillColor="#4D7B3FA0"
+        android:pathData="M54,58m-26,0a26,26 0,1 1,52 0a26,52 0,1 1,-52 0" />
+
+    <!-- Outer aura ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#9B59B6"
+        android:strokeWidth="1.2"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0" />
+
+    <!-- Inner aura ring -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#7B3FA0"
+        android:strokeWidth="0.7"
+        android:pathData="M54,54m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0" />
+
+    <!-- Full Buddha silhouette as one unified path -->
+    <!-- Ushnisha (topknot) -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M54,12 C51,12 48,15 48,18 C48,21 51,23 54,23 C57,23 60,21 60,18 C60,15 57,12 54,12 Z" />
+
+    <!-- Head - taller oval -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M54,22 C47,22 42,28 42,36 C42,44 47,50 54,50 C61,50 66,44 66,36 C66,28 61,22 54,22 Z" />
+
+    <!-- Neck - narrow -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M50,49 L50,56 L58,56 L58,49 Z" />
+
+    <!-- Shoulders - narrow, sloping down -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M50,54 C46,54 36,58 30,66 L78,66 C72,58 62,54 58,54 Z" />
+
+    <!-- Torso - narrowing slightly -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M30,65 L32,82 L76,82 L78,65 Z" />
+
+    <!-- Left arm - hangs close to body -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M30,66 C26,68 22,74 22,82 L32,82 L32,66 Z" />
+
+    <!-- Right arm - hangs close to body -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M78,66 C82,68 86,74 86,82 L76,82 L76,66 Z" />
+
+    <!-- Left knee/leg - wide, flat, crossing -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M16,82 C16,82 20,96 36,96 C46,96 50,90 54,90 C50,86 38,84 22,84 Z" />
+
+    <!-- Right knee/leg - wide, flat, crossing -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M92,82 C92,82 88,96 72,96 C62,96 58,90 54,90 C58,86 70,84 86,84 Z" />
+
+    <!-- Center lap/hands area -->
+    <path
+        android:fillColor="#C9B3D9"
+        android:pathData="M32,82 L32,90 C32,90 42,96 54,96 C66,96 76,90 76,90 L76,82 Z" />
+
+    <!-- Lotus base -->
+    <path
+        android:fillColor="#9B59B6"
+        android:pathData="M20,96 C20,96 34,102 54,102 C74,102 88,96 88,96 C88,99 74,104 54,104 C34,104 20,99 20,96 Z" />
+
+</vector>
